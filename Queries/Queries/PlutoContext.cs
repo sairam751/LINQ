@@ -6,7 +6,7 @@ namespace Queries
     public class PlutoContext : DbContext
     {
         public PlutoContext()
-            : base("name=PlutoContext")
+            : base("name=DatabaseCoonection")
         {
         }
 
