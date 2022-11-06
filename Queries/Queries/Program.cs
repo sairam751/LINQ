@@ -12,7 +12,7 @@ namespace Queries
             var context = new PlutoContext();
             //LINQ SYNTAX
             //To get all c# cources
-            var query =
+            /*var query =
                 from c in context.Courses
                 where c.Name.Contains("c#")
                 orderby c.Name
@@ -27,7 +27,27 @@ namespace Queries
                     .OrderBy(c => c.Name);
             foreach (var c1 in course)
                 Console.WriteLine(c1.Name);
+            Console.ReadLine();*/
+
+            /*// combine where expression
+            var query =
+                from c in context.Courses
+                where c.Level == 1 && c.Author.Id == 1
+                select c;
+            foreach (var cours in query)
+                Console.WriteLine(cours.Name);*/
+
+         
+            // Order command
+            var query =
+                from c in context.Courses
+                where c.Level == 1
+                orderby c.Level descending, c.Name
+                select c;
+            foreach (var cours in query)
+                Console.WriteLine(cours.Name);
             Console.ReadLine();
+
         }
         
     }
