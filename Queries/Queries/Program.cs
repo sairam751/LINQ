@@ -72,6 +72,7 @@ namespace Queries
                      Console.WriteLine(cours.Name);
              }*/
 
+            /*
             //Aggregate Functions
 
             var query = 
@@ -83,6 +84,42 @@ namespace Queries
             {
                 Console.WriteLine("{0}-{1}" , group.Key, group.Count());
             }
+            */
+
+
+            /*
+            // Inner Join
+
+            //Use when there is  relationship between your entities
+            // As it has navigation propert in course of entity author so no need to join separately
+            var query =
+                from  c in context.Courses
+                   select new { CourseName = c.Name, AuthorName = c.Author.Name };
+
+            foreach (var group in query)
+            {
+                Console.WriteLine(group.CourseName );
+                Console.WriteLine(group.AuthorName);
+            }
+
+            */
+
+
+            // Inner Join
+
+            //Use when there is no relationship between your entities and you need to link them based on a key.
+
+              var query =
+              from a in context.Authors
+              join c in context.Courses on a.Id equals c.AuthorId
+              select new { Course = c.Name, Author = a.Name };
+
+            foreach (var group in query)
+            {
+                Console.WriteLine(group.Course);
+                Console.WriteLine(group.Author);
+            }
+
             Console.ReadLine();
         }
         
