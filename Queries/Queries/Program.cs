@@ -104,7 +104,7 @@ namespace Queries
 
             */
 
-
+            /*
             // Inner Join
 
             //Use when there is no relationship between your entities and you need to link them based on a key.
@@ -119,7 +119,41 @@ namespace Queries
                 Console.WriteLine(group.Course);
                 Console.WriteLine(group.Author);
             }
+            */
 
+
+            /* 
+             
+            // Group Join
+
+            //Left join in sql
+
+            var query =
+            from a in context.Authors
+            join c in context.Courses on a.Id equals c.AuthorId into g
+            select new { AuthorName = a.Name, Courses = g.Count() };
+
+            foreach (var x in query)
+            {
+                Console.WriteLine("{0} {1}", x.AuthorName,x.Courses);
+            }
+
+            */
+
+
+            // Cross Join
+
+            // Full join in sql
+            var query =
+            from a in context.Authors
+            from c in context.Courses
+            select new { AuthorName = a.Name, CourseName = c.Name };
+
+
+            foreach (var x in query)
+            {
+                Console.WriteLine("{0} {1}", x.AuthorName, x.CourseName);
+            }
             Console.ReadLine();
         }
         
