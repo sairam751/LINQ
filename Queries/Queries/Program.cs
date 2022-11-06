@@ -37,8 +37,8 @@ namespace Queries
             foreach (var cours in query)
                 Console.WriteLine(cours.Name);*/
 
-         
-            // Order command
+
+            /*// Order command
             var query =
                 from c in context.Courses
                 where c.Level == 1
@@ -46,8 +46,44 @@ namespace Queries
                 select c;
             foreach (var cours in query)
                 Console.WriteLine(cours.Name);
-            Console.ReadLine();
+           */
 
+            /*
+            //Projections
+            var query =
+               from c in context.Courses
+               select new { Course = c.Name, AuthorName = c.Author.Name };
+
+            foreach (var cours in query)
+                Console.WriteLine(cours);
+            */
+
+            /* //GROUP BY
+             //No need of use group by aggregate
+            var query= from c in context.Courses
+             group c by c.Level 
+             into g
+             select g;
+             foreach (var group in query)
+             {
+                 Console.WriteLine(group.Key);
+
+                 foreach (var cours in group)
+                     Console.WriteLine(cours.Name);
+             }*/
+
+            //Aggregate Functions
+
+            var query = 
+                from c in context.Courses
+           group c by c.Level
+           into g
+           select g;
+            foreach (var group in query)
+            {
+                Console.WriteLine("{0}-{1}" , group.Key, group.Count());
+            }
+            Console.ReadLine();
         }
         
     }
