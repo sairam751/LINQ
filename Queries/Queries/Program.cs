@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Data;
 using System.Data.Entity;
+using System;
 
 namespace Queries
 {
@@ -66,22 +67,49 @@ namespace Queries
                         
             */
 
-            // Deleting Data
+            /*           
+                       // Deleting Data
 
-            // Cascade Delete [All the related rows will also be deleted (Tags in this case)]
+                       // Cascade Delete [All the related rows will also be deleted (Tags in this case)]
 
-            var course = context.Courses.Find(4);
-            context.Courses.Remove(course);
+                       var course = context.Courses.Find(4);
+                       context.Courses.Remove(course);
 
-            //Wihout Cascade Delete[Cascade delete is set to off]
-            //In that case first remove child rows and delete the parent.
-            //Cascade delet can be turned off in the plutocontext class and in method OnModelCreating()
+                       //Wihout Cascade Delete[Cascade delete is set to off]
+                       //In that case first remove child rows and delete the parent.
+                       //Cascade delet can be turned off in the plutocontext class and in method OnModelCreating()
 
 
-            var author = context.Authors.Include(a => a.Courses).Single(a => a.Id == 2);
-            context.Courses.RemoveRange(author.Courses);
-            context.Authors.Remove(author);
+                       var author = context.Authors.Include(a => a.Courses).Single(a => a.Id == 2);
+                       context.Courses.RemoveRange(author.Courses);
+                       context.Authors.Remove(author);
+           */
 
+            //Change tracker
+            //There uis a change tracter in entity framework when we exceute the save change method the entity frame
+            //work will look into chnage tracker and cvert sql queries accordingly. 
+
+
+            //Add an object
+            context.Authors.Add(new Author { Name = "new Author" });
+
+            //update object
+            var author = context.Authors.Find(4);
+            author.Name = "updated";
+
+
+            //Delete an object
+            var author2 = context.Authors.Find(4);
+            context.Authors.Remove(author2);
+
+
+            var entries = context.ChangeTracker.Entries();
+            foreach(var entry in entries)
+            {
+
+                //state will contain either modified,updated or deleted.
+                Console.WriteLine(entry.State);
+            }
             context.SaveChanges();
         }
     }
