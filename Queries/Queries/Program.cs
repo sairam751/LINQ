@@ -1,5 +1,7 @@
 ﻿
 using System.Linq;
+using System.Data;
+using System.Data.Entity;
 
 namespace Queries
 {
@@ -54,16 +56,33 @@ namespace Queries
               context.Courses.Add(course);
 
  */
+            /*
+                        // Modifing Data
+                        var course = context.Courses.Find(4);
+                        course.Name = "new name";
+                        //For foreign key
+                        course.AuthorId=2;
 
-            // Modifing Data
+                        
+            */
+
+            // Deleting Data
+
+            // Cascade Delete [All the related rows will also be deleted (Tags in this case)]
+
             var course = context.Courses.Find(4);
-            course.Name = "new name";
-            //For foreign key
-            course.AuthorId=2;
+            context.Courses.Remove(course);
+
+            //Wihout Cascade Delete[Cascade delete is set to off]
+            //In that case first remove child rows and delete the parent.
+            //Cascade delet can be turned off in the plutocontext class and in method OnModelCreating()
+
+
+            var author = context.Authors.Include(a => a.Courses).Single(a => a.Id == 2);
+            context.Courses.RemoveRange(author.Courses);
+            context.Authors.Remove(author);
 
             context.SaveChanges();
-
-
         }
     }
 }
