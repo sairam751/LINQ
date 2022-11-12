@@ -52,6 +52,7 @@ namespace Queries
             };
 
             context.Courses.Add(course);
+            context.SaveChanges();
 
 
         }
